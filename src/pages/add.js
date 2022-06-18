@@ -29,13 +29,16 @@ function Add() {
     signUpUser(userObj).then((res) => {
       console.log(res)
 
-      sendData(userObj, "StudentData", res.user.uid).then(() => {
+      sendData(userObj, "StudentData").then(() => {
+        alert("Form Submitted Succesfully")
         console.log("Data Saved Succcessfully")
         
       });
     }).catch((err) => {
       console.log(err)
     });
+
+    
 
 
 
@@ -105,7 +108,7 @@ function Add() {
           </Box>
          
          <Box sx={{ padding: "10px" }}>
-         <Link to="/view">
+         <Link to="/view"  style={{textDecoration:"none"}}  >
          <SmButtton   label="View Data" />
          </Link>
 

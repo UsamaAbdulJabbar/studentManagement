@@ -5,10 +5,10 @@ import Button from '@mui/material/Button';
 
 
 function SmButtton(props) {
-    const {label,onClick} = props;
+    const {label,onClick,color,onChange} = props;
     return (
 
-        <Button onClick= {onClick}  variant="contained">{label}</Button>
+        <Button onChange={onChange} onClick= {onClick} color={color} variant="contained">{label}</Button>
         
     )
 }

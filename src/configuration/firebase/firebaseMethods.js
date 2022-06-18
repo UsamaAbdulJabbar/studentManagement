@@ -63,10 +63,22 @@ let logInUser = (obj) => {
 
 
 // *** Database ***
-let sendData = (obj, nodeName, id) => {
-    let reference = ref(database, `${nodeName}/${id ? id : ""}`);
-    return set(reference, obj)
+// let sendData = (obj, nodeName, id) => {
+//     let reference = ref(database, `${nodeName}/${id ? id : ""}`);
+//     return set(reference, obj)
 
+// };
+
+let sendData = (obj, nodeName, id) => {
+  if (!id) {
+    // for id/key start
+    let postListRef = ref(database, nodeName);
+    obj.id = push(postListRef).key;
+    console.log(obj.id);
+    // for id/key end
+  }
+  let newpostListRef = ref(database, `${nodeName}/${id ? id : obj.id}`);
+  return set(newpostListRef, obj);
 };
 
 // let getData = (nodeName, props) => {
