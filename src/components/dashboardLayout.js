@@ -18,6 +18,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import { NavLink, useNavigate } from 'react-router-dom';
+import Slider from './slider';
+import Cards from './cards';
 
 
 const drawerWidth = 240;
@@ -90,7 +93,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function DashboardLayout() {
     
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -99,7 +102,16 @@ export default function DashboardLayout() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  const navigate = useNavigate();
+  const add =()=>{
+    navigate(`/add`)
+  }
+  const studentData =()=>{
+    navigate(`/view`)
+  }
+  const idCard =()=>{
+    navigate(`/idCard`)
+  }
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -118,7 +130,7 @@ export default function DashboardLayout() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+            STUDENT MANAGEMENT SYSTEM
           </Typography>
         </Toolbar>
       </AppBar>
@@ -128,10 +140,12 @@ export default function DashboardLayout() {
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
+      
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+          
+            <ListItem  disablePadding sx={{ display: 'block',backgroundColor:"#1976d2",border:"1px solid white" }}>
+              <NavLink to="/add" style={{textDecoration:"none"}}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -146,17 +160,16 @@ export default function DashboardLayout() {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                 
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText sx={{color:"white"}} primary="Student Form"  />
               </ListItemButton>
+              </NavLink>
             </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+
+            {/* student Data */}
+            <ListItem  disablePadding sx={{ display: 'block',backgroundColor:"#1976d2",border:"1px solid white" }}>
+              <NavLink to="/view" style={{textDecoration:"none"}}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -171,16 +184,56 @@ export default function DashboardLayout() {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                 
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText sx={{color:"white"}} primary="Student Data"  />
               </ListItemButton>
+              </NavLink>
             </ListItem>
-          ))}
+
+
+             {/* student ID */}
+             <ListItem  disablePadding sx={{ display: 'block',backgroundColor:"#1976d2",border:"1px solid white" }}>
+              <NavLink to="/view" style={{textDecoration:"none"}}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                 
+                </ListItemIcon>
+                <ListItemText sx={{color:"white"}} primary="Student ID Card"  />
+              </ListItemButton>
+              </NavLink>
+            </ListItem>
+
+          
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 10, display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center" }}>
+             <Box sx={{display:"flex"}}>
+
+              <Box sx={{ padding:"20px"}}>
+                <Cards onClick={add} head="STUDENT FORM" label="Stundent Form" image="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" />
+              </Box>
               
+              <Box sx={{ padding:"20px"}}>
+                <Cards onClick={studentData} head="STUDENT DATA" label="Student Data" image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1115&q=80" />
+              </Box>
+
+              <Box sx={{ padding:"20px"}}>
+                <Cards onClick={idCard} head="STUDENT ID CARD" label="ID Card" image="https://images.unsplash.com/photo-1566554001689-b53a88dbd138?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=762&q=80" />
+              </Box>
+             </Box>
       </Box>
     </Box>
   );

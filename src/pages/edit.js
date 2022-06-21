@@ -4,27 +4,27 @@ import React from 'react'
 import SmButtton from '../components/smButtton';
 import SmInput from '../components/smInput';
 import { useState, useNavigate } from 'react';
-import { sendData, signUpUser } from '../configuration/firebase/firebaseMethods';
+import { getData, sendData, signUpUser } from '../configuration/firebase/firebaseMethods';
 import {
 
   Link
 } from "react-router-dom";
 import "./add.css"
-import Alert from '@mui/material/Alert';
-import CheckIcon from '@mui/icons-material/Check';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 
-
-import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-
-function Add() {
+function Edit() {
 
   const [userObj, setUserObj] = useState({});
-  const [open, setOpen] = React.useState(false);
+
+  const [data, setData] = useState([]);
+  const GetData = () => {
+    getData('StudentData').then((res) => {
+      setData(res);
+
+
+
+    });
+  }
 
   const Save = () => {
     if (!userObj.email) {
@@ -42,9 +42,9 @@ function Add() {
     //   console.log(res)
 
       sendData(userObj, "StudentData").then(() => {
-        setOpen(true);
+        alert("Data Submitted Successfully")
+
         console.log("Data Saved Succcessfully")
-        window.location.reload(false);
 
       }).catch((err) => {
       console.log(err)
@@ -56,33 +56,6 @@ function Add() {
 
   };
 
-  
-
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  const action = (
-    <React.Fragment>
-      <Button color="secondary" size="small" onClick={handleClose}>
-        UNDO
-      </Button>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  );
-
 
 
 
@@ -90,12 +63,12 @@ function Add() {
     <>
 <div className='main'>
   <div className='centerDiv'>
-      <Typography variant='h3'>Add Student Data</Typography>
+      <Typography variant='h3'>Edit Student Data</Typography>
     
   <Box sx={{ marginTop: "25px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
         <Box sx={{ display: "flex" }}>
           <Box sx={{ padding: "10px" }}>
-            <SmInput onChange={(e) => setUserObj({ ...userObj, name: e.target.value })} label="Student Name" type="text" />
+            <SmInput  onChange={(e) => setUserObj({ ...userObj, name: e.target.value })} label="Student Name" type="text" />
           </Box>
           <Box sx={{ padding: "10px" }}>
             <SmInput onChange={(e) => setUserObj({ ...userObj, FatherName: e.target.value })} label="Father Name" type="text" />
@@ -146,15 +119,8 @@ function Add() {
 
         <Box >
           <Box sx={{ padding: "10px" }} >
-          <Button variant='contained' anchorOrigin='center' onClick={Save}>Submitted</Button>
-      <Snackbar
-        open={open}
-        autoHideDuration={6000}
-      
-        message="Data Submitted Successfully"
-        action={action}
-      />
-            {/* <SmButtton onClick={Save} label="Submit" /> */}
+
+            <SmButtton onClick={Save} label="Submit" />
           </Box>
 
           <Box sx={{ padding: "10px" }}>
@@ -163,16 +129,7 @@ function Add() {
             </Link>
 
           </Box>
-
-          <Box sx={{ padding: "10px" }}>
-            <Link to="/idCard" style={{ textDecoration: "none" }}  >
-              <SmButtton label="Generate ID Card" />
-            </Link>
-
-          </Box>
-          
         </Box>
-
 
 
 
@@ -186,4 +143,4 @@ function Add() {
   )
 }
 
-export default Add;
+export default Edit;

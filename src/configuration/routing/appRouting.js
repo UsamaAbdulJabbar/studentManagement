@@ -12,6 +12,8 @@ import Update from "../../pages/update";
 import About from "../../pages/about";
 import View from "../../pages/view";
 import Add from "../../pages/add";
+import IdCard from "../../pages/idCard";
+import Edit from "../../pages/edit";
 function AppRouting() {
 
 
@@ -21,11 +23,13 @@ function AppRouting() {
                 <Routes>
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/" element={<Dashboard />} />
                     <Route path="/add" element={<Add/>} />
                     <Route path="/update" element={<Update />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/view" element={<View />} />
+                    <Route path="/idCard" element={<IdCard />} />
+                    <Route path="/edit" element={<Edit />} />
                 </Routes>
             </Router>
 

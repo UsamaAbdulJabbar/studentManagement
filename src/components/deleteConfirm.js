@@ -9,7 +9,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
 export default function DeleteConfirmation(props) {
-  const {label} = props;
+  const {label, onClick} = props;
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -33,9 +33,7 @@ export default function DeleteConfirmation(props) {
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >
-        <DialogTitle id="responsive-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
+        
         <DialogContent>
           <DialogContentText>
         {label}
