@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -21,6 +21,11 @@ import MailIcon from '@mui/icons-material/Mail';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Slider from './slider';
 import Cards from './cards';
+import { useSelector,useDispatch } from 'react-redux';
+import SmButtton from './smButtton';
+import axios from "axios";
+import { useState } from 'react';
+ 
 
 
 const drawerWidth = 240;
@@ -112,6 +117,55 @@ export default function DashboardLayout() {
   const idCard =()=>{
     navigate(`/idCard`)
   }
+
+   //API GET DATA
+  const [apiData, setApiData] = useState([]);
+
+  let api = 'https://jsonplaceholder.typicode.com/users/1';
+
+  const GetApiData = ()=>{
+    axios.get(api).then((res)=>{
+      console.log(res.data)
+     setApiData(res.data)
+    
+     
+  }).catch((err)=>{
+      console.log(err);
+  })
+
+  
+    }
+
+
+  //getting data from REDUX REDUCER
+  const getDataFromReducer = useSelector((a)=>a)
+  console.log(getDataFromReducer);
+
+  //Update data from REDUX REDUCER
+  
+  const dispatch = useDispatch();
+
+  const UpdateData = ()=>{
+   
+    dispatch(
+      {
+        type :"dataUpdated",
+        ID : apiData.id,
+        name : apiData.name,
+        username : apiData.username,
+        email : apiData.email,
+        contact : apiData.contact,
+        website : apiData.website,
+
+        
+      }
+    )
+  }
+ 
+  
+ 
+console.log(apiData)
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -234,7 +288,54 @@ export default function DashboardLayout() {
                 <Cards onClick={idCard} head="STUDENT ID CARD" label="ID Card" image="https://images.unsplash.com/photo-1566554001689-b53a88dbd138?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=762&q=80" />
               </Box>
              </Box>
+             <hr></hr>
+             <Box>
+          <Typography variant='h4'>ID : {getDataFromReducer.id}</Typography>
+        </Box>
+        <Box>
+          <Typography variant='h4'>Name : {getDataFromReducer.name}</Typography>
+        </Box>
+        <Box>
+          <Typography variant='h4'>UserName : {getDataFromReducer.username}</Typography>
+        </Box>
+        
+        <Box>
+          <Typography variant='h4'>Email : {getDataFromReducer.email}</Typography>
+        </Box>
+        <Box>
+          <Typography variant='h4'>Contact: {getDataFromReducer.contact}</Typography>
+        </Box>
+        <Box>
+          <Typography variant='h4'>Website: {getDataFromReducer.website}</Typography>
+        </Box>
+                    {/* DATA ARE GETTING FROM API */}
+        {/* <Box>
+          <Typography variant='h4'>ID : {apiData.id}</Typography>
+        </Box>
+        <Box>
+          <Typography variant='h4'>Name : {apiData.name}</Typography>
+        </Box>
+        <Box>
+          <Typography variant='h4'>UserName : {apiData.username}</Typography>
+        </Box>
+        <Box>
+          <Typography variant='h4'>Email : {apiData.email}</Typography>
+        </Box>
+        <Box>
+          <Typography variant='h4'>Phone : {apiData.phone}</Typography>
+        </Box>
+        <Box>
+          <Typography variant='h4'>Website : {apiData.website}</Typography>
+        </Box> */}
+
+        <Box>
+          <SmButtton label='Update' onClick={UpdateData} />
+        </Box>
+        <Box>
+          <SmButtton label='Get Api Data' onClick={GetApiData} />
+        </Box>
       </Box>
+                 
     </Box>
   );
 }
